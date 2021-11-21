@@ -1,0 +1,16 @@
+садимся за комп на 3 день wsr
+заходим на master > cd /opt/
+git clone ссылка на репозиторий Вадима
+cd
+git clone ссылка на ваш репозиторий
+cp файлы /opt/master
+./setup.sh
+смотрим что все работает и заливаем на новый репозиторий
+пьем пиво
+
+git init
+git add . 
+git commit -m "first commit" (при вносе изменений в файлы, перезапись)
+git branch -M main (создать ветку, не репу)
+git remote add origin https://github.com/qwertyebik/branch.git (представить репу в виде origin)
+git push -u origin main (добавляем ветку main в репу branch под именем origin)

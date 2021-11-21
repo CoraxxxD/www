@@ -1,0 +1,12 @@
+apt install -y samba-common*
+realm discover домен
+realm join -U Administrator домен
+
+nano /etc/sssd/sssd.conf
+	use_fully-qualified_names = True >> False
+systemctl restart sssd
+
+nano /etc/pam.d/common-account
+	в конец session required pam_mkhomedir.so umask=0022 skel=/etc/skel/ silent
+
+ну и ребут

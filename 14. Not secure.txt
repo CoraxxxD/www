@@ -1,0 +1,20 @@
+на INET-CLI создаём папку и расшариваем, кликаем YES
+
+cmd ipconfig, узнаем ipv4
+
+L-FW:
+
+
+
+
+cd /etc/ca/
+
+dnf install samba-client -y
+
+smbclient -U ИмяПользакаИнеткли //ip клиента/Расшаренная папка
+
+put cacert.pem
+
+INET-CLI:
+
+меняем расширение файла на .crt и устанавливаем в trusted

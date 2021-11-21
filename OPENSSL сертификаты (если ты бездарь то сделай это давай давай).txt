@@ -1,0 +1,67 @@
+L-FW
+
+
+nano /etc/pki/tls/openssl.cnf                // если debian nano /usr/lib/ssl/openssl.cnf
+	
+	[ CA-default ]
+	dir	= /etc/ca
+
+	[ req_distinquished_name ]
+	
+	countryName_default	= RU
+	
+	0.organizationName_default	= WorldSkills Russia
+
+В главе CA Policy меняем всё на optional
+	
+mkdir /etc/ca
+
+cd /etc/ca
+
+mkdir private newcerts certs crl
+touch index.txt
+echo 01 >> serial
+openssl genrsa -out private/cakey.pem 2048
+
+openssl req -new -key private/cakey.pem -out ca.csr
+
+	Enter PEM pass phrase: toor
+	toor
+	Country Name : [Enter]
+	Province Name : RU
+	Locality Name : [Enter]
+	Organization Name : [Enter]
+	Organization Unit Name : WorldSkills Russia
+	Common Name : WSR CA
+	Email Address : [Enter]
+	A challenge password : [Enter]
+	An optional company name : [Enter]
+	Enter pass phrase: toor
+
+openssl x509 -req -in ca.csr -out cacert.pem -signkey private/cakey.pem
+
+---------------------------------------
+
+openssl genrsa -out www.key 2048
+
+openssl req -new -key www.key -out www.csr
+
+	## Все заполняем как при создании cecert.pem, меняем только common name на имя нашего сертификата ##
+	Common Name : site.unakbars.ru
+
+openssl ca -in www.csr -out www.pem
+
+cp -r /etc/ca/* /opt/
+
+-------------------------------не надо пока-----------------------
+доверие центру сертификации
+
+scp /etc/ca/cacert.pem l-cli-a:/opt 
+scp /etc/ca/cacert.pem l-cli-b:/opt
+scp /etc/ca/cacert.pem 192.168.100.100:/opt
+scp /etc/ca/cacert.pem 20.20.20.5:/opt
+
+заходим на клиенты и на каждом пишем
+
+cp /opt/cacert.pem /etc/pki/ca-trust/source/anchors
+update-ca-trust

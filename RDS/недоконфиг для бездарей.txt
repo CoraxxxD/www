@@ -1,0 +1,52 @@
+DC Центр сертификации, CA Name = APP CA, 5 лет.
+CA -> web server template -> www, security(Auth Users - full control). <New template to issue>
+
+
+mmc -> Personal -> request new. www, Common name = vdi.unakbars.ru, site.unakbars.ru, key archived.
+
+
+Настраиваем DHCP под пул 60-80 адресов
+
+
+экспортим его на INET-CLI и даём любое имя.
+
+
+RDS, на новом диске 4 папки VM, VHD, Profile, Template. Расшарить Profile и Template для всех (Advanced Sharing), выдать доступ VM и Users в Modify
+
+
+ПЕРЕВТЫКАЕМ КОННЕКТ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+Hyper-V, Settings, указываем пути к папкам.
+
+
+Создаем вм и не трогаем её 
+
+
+Collections - Tasks - Edit - Export location(\\RDS\Template)
+
+
+RD Gateway -> указываем vdi.unakbars.ru
+
+
+Collections -> Edit -> Certificates и для всех выбираем pfx  
+
+
+Создаём коллекцию, RD Virtualization host - E:\VHD, Profile - \\172.16.10.5\Profile
+
+
+Далее nginx и nftables
+
+------------------------------------------------------------
+
+в nginx меняем церты site.unakbars на церты vdi.unakbars
+
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\CentralPublishedResources\PublishedFarms\\DeploymentSettings
+, затем отредактируйте значение DeploymentRDPSettings, в конец добавить порт :442.
+
+Затем в этой же папке Remote desktops -> App collection -> RDPFIleContents, находим часть строки gatewayhostname:s:vdi.unakbars.ru и ставим порт :442
+
+отключаем файрволл
+
+РЕБУТ РЕБУТ РЕБУТ РЕБУТ РЕБУТ + Службы

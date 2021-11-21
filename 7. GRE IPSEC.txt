@@ -1,0 +1,43 @@
+L-FW:
+dnf install -y libreswan
+nano /etc/ipsec.d/vpn.conf
+	conn vpn
+		authby=secret
+		auto=start
+		type=tunnel	
+		ike=3des-sha1;dh14
+		esp=aes256-sha2
+		left=200.100.100.100
+		leftprotoport=gre
+		leftsubnet=0.0.0.0/0
+		right=200.100.100.200
+		rightprotoport=gre
+		rightsubnet=0.0.0.0/0
+
+nano /etc/ipsec.secrets
+: PSK "WSR2021"
+
+ipsec rereadsecrets
+systemctl enable ipsec
+
+R-FW:
+dnf install -y libreswan
+nano /etc/ipsec.d/vpn.conf
+	conn vpn
+		authby=secret
+		auto=start
+		type=tunnel	
+		ike=3des-sha1;dh14
+		esp=aes256-sha2
+		left=200.100.100.200
+		leftprotoport=gre
+		leftsubnet=0.0.0.0/0
+		right=200.100.100.100
+		rightprotoport=gre
+		rightsubnet=0.0.0.0/0
+
+nano /etc/ipsec.secrets
+: PSK "WSR2021"
+
+systemctl start ipsec
+systemctl enable ipsec

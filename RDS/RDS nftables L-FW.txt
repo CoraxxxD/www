@@ -1,0 +1,9 @@
+nano /etc/nftables/nat.nft
+chain PRE {
+	type nat hook prerouting priority 0;
+	iifname "ens192" tcp dport 3389 counter dnat to 172.16.10.5
+	iifname "ens192" udp dport 3389 counter dnat to 172.16.10.5
+	iifname "ens192" tcp dport 442 counter dnat to 172.16.10.5:443
+}
+
+systemctl restart nftables

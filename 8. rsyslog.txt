@@ -1,0 +1,35 @@
+WEB1/WEB2:
+
+apt install rsyslog -y
+
+nano /etc/rsyslog.d/log.conf
+
+*.* @@172.16.20.10:514
+
+systemctl restart rsyslog
+systemctl enable rsyslog
+
+LOG:
+
+apt install rsyslog -y
+
+nano /etc/rsyslog.conf
+раскоментить
+
+	module(load="imtcp")
+	input(type="imtcp" port="514")
+
+
+nano /etc/rsyslog.d/log.conf
+
+*.* if ($hostname == "WEB1") then /opt/logs/WEB1/logs.log
+*.* if ($hostname == "WEB2") then /opt/logs/WEB2/logs.log
+*.* if ($hostname == "172.16.10.100") then /opt/logs/WEB1/web1.log
+*.* if ($hostname == "172.16.10.200") then /opt/logs/WEB2/web2.log
+
+
+mkdir /opt/logs/
+chmod 777 /opt/logs/
+
+systemctl restart rsyslog
+systemctl enable rsyslog

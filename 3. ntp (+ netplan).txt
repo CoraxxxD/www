@@ -1,0 +1,13 @@
+nano /etc/netplan/99..
+netplan apply
+
+nano /etc/chrony.conf = centos
+nano /etc/chrony/chrony.conf = ubuntu 
+
+rtcsync
+server 200.100.100.254 iburst
+makestep 1 5
+timedatectl set-timezone Europe/Moscow
+
+systemctl restart chrony
+systemctl enable chrony
