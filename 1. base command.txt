@@ -1,8 +1,8 @@
-выключить firewalld
+РѕС‚РєР»СЋС‡РµРЅРёРµ firewalld
 
 systemctl disable --now firewalld
 
-выключить selinux 
+РѕС‚РєР»СЋС‡РµРЅРёРµ selinux 
 
 nano /etc/selinux/config
 
