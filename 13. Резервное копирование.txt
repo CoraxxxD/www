@@ -1,7 +1,7 @@
 crontab -e 
 
-0 * * * *  cp -r /root/docker_compose/data/db/* /opt/share/data (каждый час) 
+0 * * * *  cp -r /root/docker_compose/data/db/* /opt/share/data (С‡Р°СЃ) 
 
 
-* * * * * (каждую минуту)
+* * * * * (РјРёРЅСѓС‚Р°)
 
